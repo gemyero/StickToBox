@@ -6,17 +6,23 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password
 from django.views import generic
 from django.db.models import Q
-from .models import Book, Author, Category
+from .models import *
 from django.views.generic import ListView, DetailView
 from .forms import RegistrationForm, LoginForm
 
 # Create your views here.
 
-def author(request):
-    return render(request, 'author.html')
+class AuthorView(DetailView):
+    model = Author
 
-def book(request):
-    return render(request, 'book.html')
+class BookView(DetailView):
+    model = Book
+
+class CategoryList(ListView):
+    model = Category
+
+class CategoryView(DetailView):
+    model = Category
 
 # def login (request):
 
@@ -37,8 +43,8 @@ def register (request):
 # 	pass
 
 
-class authors(ListView):
-	model = Author		
+#class authors(ListView):
+#	model = Author		
 				
 
 
@@ -46,14 +52,14 @@ class authors(ListView):
 # 	pass
 
 
-class books(ListView):
-	model = Book
+#class books(ListView):
+#	model = Book
 
 
 # def category (request):
 # 	pass
 
 
-class categories(ListView):
-	model = Category
+#class categories(ListView):
+#	model = Category
 

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Author</title>
+    <title>{{ author.full_name }}</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}"> <!-- bootstrap default styling file-->
@@ -47,7 +47,7 @@
           <ul class="navbar-nav">
 
           	<li class="nav-item">
-          	    <a class="nav-link" href="all_products.html">Categories</a>
+          	    <a class="nav-link" href="{% url 'category-list' %}">Categories</a>
           	</li>
             
             <li class="nav-item ">
@@ -59,11 +59,11 @@
 
         <div class="row position-absolute right h-100">
             <div class="col-md-4">
-                <img src="{% static "img/ninja.png" %}" class="img-thumbnail imgindiv">
+                <img src="{{ user.profile_picture.url }}" class="img-thumbnail imgindiv">
             </div>
 
             <div class="col-md-8 px-2">
-                <p>User</p>
+                <p>{{ user.user.get_full_name }}</p>
             </div>
         </div>
 
@@ -72,22 +72,20 @@
       <div class="row bord p-3">
         <div class="col-2 long" >
           <div align="center">
-            <img class="imag img-fluid" src="{% static "img/ninja.png" %}" alt="">
+            <img class="imag img-fluid" src={{ author.picture.url }} alt="">
           </div>
         </div>
 
         <div class="col-10 long">
+          <h2 class="row">Personal Information</h2>
           <div class="row">
-            Name
+            Name: {{ author.full_name }} 
           </div>
           <div class="row">
-            DOB
+            Born: {{ author.date_of_birth }}
           </div>
           <div class="row">
-            DOD
-          </div>
-          <div class="row">
-            country
+            Died: {{ author.date_of_death }}
           </div>
         </div>
         
@@ -95,10 +93,10 @@
       <div class="row longp-3">
         <div class="col-2">
           <div class="row p-3">
-            Bio
+            <h2 class="row">Bio</h2>
           </div>
           <div class="row">
-            Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio Bio 
+              {{ author.bio }}
           </div>
 
         </div>
@@ -108,32 +106,21 @@
           <table class="table table-responsive table-hover table-striped">
             <thead align="center">
               <tr class="table-info">
-                <th>No.</th>
-                <th>Picture</th>
-                <th>Name</th>
+                <th>Book No.</th>
+                <th>Book Picture</th>
+                <th>Book Name</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
-              </tr>
-              <tr>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
-              </tr>
-              <tr>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
-              </tr>
-              <tr>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
-              </tr>
+                
+                {% for book in author.book_set.all %}
+                  <tr>
+                    <td>{{ book.id }}</td>
+                    <td><img src="{{ book.image.url }}" alt=""></td>
+                    <td><a href="{% url 'book-detail' book.id %}">{{ book.title }}</a></td>
+                  </tr>
+                {% endfor %}
+                  
             </tbody>
           </table>
         </div>
