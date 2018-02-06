@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
-from books.views import author, book
+# from books.views import author, book
 
 urlpatterns = [
     path('admin/', admin.site.urls),

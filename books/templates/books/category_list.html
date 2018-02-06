@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>authors</title>
+  <link rel="stylesheet" href="">
+</head>
+<body>
+  <h2>authors</h2>
+    <ul>
+        {% for author in object_list %}
+            <li>{{ author.first_name }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
