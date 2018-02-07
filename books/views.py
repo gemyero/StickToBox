@@ -18,9 +18,19 @@ def author(request):
 def book(request):
     return render(request, 'book.html')
 
-# def login (request):
+def checkLogin (request):
+	# if form.method=="POST":
+		uname = request.POST.get('username')
+		passwd = request.POST.get('password')
+		user = authenticate(username=uname,password=passwd)
+		if user is not None:
+			authlogin(request,user)
+			return redirect('books:home')
+		else :
+			return redirect('books:register')
 
-# 	pass
+def checkRegister(request):
+	pass
 
 
 def register (request):
@@ -29,8 +39,8 @@ def register (request):
 	return render(request,'books/index.html',{'rform':regForm, 'lform':logForm})
 
 # @login_required()
-# def home (request):
-# 	pass
+def home (request):
+	return render(request,"books/home.html")
 
 
 # def author (request):

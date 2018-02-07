@@ -57,7 +57,7 @@ jQuery(document).ready(function($){
 		$password_field.putCursorAtEnd();
 	});
 
-	//show forgot-password form 
+	// show forgot-password form 
 	$forgot_password_link.on('click', function(event){
 		event.preventDefault();
 		forgot_password_selected();
@@ -92,14 +92,14 @@ jQuery(document).ready(function($){
 	}
 
 	//REMOVE THIS - it's just to show error messages 
-	$form_login.find('input[type="submit"]').on('click', function(event){
-		event.preventDefault();
-		$form_login.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-	});
-	$form_signup.find('input[type="submit"]').on('click', function(event){
-		event.preventDefault();
-		$form_signup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
-	});
+	// $form_login.find('input[type="submit"]').on('click', function(event){
+	// 	// event.preventDefault();
+	// 	$form_login.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+	// });
+	// $form_signup.find('input[type="submit"]').on('click', function(event){
+	// 	// event.preventDefault();
+	// 	$form_signup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
+	// });
 
 
 	//IE9 placeholder fallback

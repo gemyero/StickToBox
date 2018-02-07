@@ -25,8 +25,8 @@
 		<nav class="main-nav">
 			<ul>
 				<!-- inser more links here -->
-				<li><a class="cd-signin" href="#0">Sign in</a></li>
-				<li><a class="cd-signup" href="#0">Sign up</a></li>
+				<li><a class="cd-signin">Sign in</a></li>
+				<li><a class="cd-signup">Sign up</a></li>
 			</ul>
 		</nav>
 	</header>
@@ -34,13 +34,13 @@
 	<div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
 		<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
 			<ul class="cd-switcher">
-				<li><a href="#0">Sign in</a></li>
-				<li><a href="#0">New account</a></li>
+				<li><a>Sign in</a></li>
+				<li><a>New account</a></li>
 			</ul>
 
 			<div id="cd-login"> <!-- log in form -->
-				<form class="cd-form"> {% csrf_token %}
-
+				<form action="{% url 'books:checkLogin' %}" method="POST" class="cd-form"> 
+					{% csrf_token %}
 					{% for field in lform %}
 					<div class="fieldset">
 						<label class="image-replace cd-{{field.name}}" for="signup-{{field.name}}">			{{field.name}}
@@ -62,7 +62,7 @@
 			</div> <!-- cd-login -->
 
 			<div id="cd-signup"> <!-- sign up form -->
-				<form class="cd-form"> {% csrf_token %}
+				<form action="{% url 'books:checkLogin' %}" class="cd-form"> {% csrf_token %}
 
 					{% for field in rform %}
 					<div class="fieldset">
