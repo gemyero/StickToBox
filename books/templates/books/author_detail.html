@@ -47,15 +47,15 @@
           <ul class="navbar-nav">
             
             <li class="nav-item">
-              <a class="nav-link" href="{% url 'author-list' %}">Authors</a>
+              <a class="nav-link" href="{% url 'books:author-list' %}">Authors</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'book-list' %}">Books</a>
+            <a class="nav-link" href="{% url 'books:book-list' %}">Books</a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'category-list' %}">Categories</a>
+          <a class="nav-link" href="{% url 'books:category-list' %}">Categories</a>
       </li>
             
             <li class="nav-item ">
@@ -125,7 +125,7 @@
                   <tr>
                     <td>{{ forloop.counter }}</td>
                     <td><img src="{{ book.image.url }}" alt=""></td>
-                    <td><a href="{% url 'book-detail' book.id %}">{{ book.title }}</a></td>
+                    <td><a href="{% url 'books:book-detail' book.id %}">{{ book.title }}</a></td>
                   </tr>
                 {% endfor %}
                   

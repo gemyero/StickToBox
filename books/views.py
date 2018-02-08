@@ -9,8 +9,10 @@ from django.db.models import Q
 from .models import *
 from django.views.generic import ListView, DetailView
 from .forms import RegistrationForm, LoginForm
+import math
 
 # Create your views here.
+
 class AuthorView(DetailView):
     model = Author
 
@@ -29,6 +31,7 @@ class CategoryList(ListView):
 class CategoryView(DetailView):
     model = Category
 
+
 def checkLogin (request):
 	if request.method == 'POST':
 		uname = request.POST.get('username')
@@ -37,8 +40,8 @@ def checkLogin (request):
 		if user is not None:
 			authlogin(request,user)
 			return render(request,"books/index.html")
-		else :
-			return redirect('books:register')
+	else:
+		return redirect('books:register')
 
 def checkRegister(request):
 	form = RegistrationForm(request.POST, request.FILES)
@@ -46,6 +49,7 @@ def checkRegister(request):
 		profile = Profile()
 		usr = User(request.POST, request.FILES['img'])
 		prof = Profile(request.FILES['img'])
+        # Check duplicate key
 		username = request.POST.get('username')
 		email = request.POST.get('email')
 		password = request.POST.get('password')
@@ -53,9 +57,10 @@ def checkRegister(request):
 		profile.user=newUser
 		profile.profile_picture=form.cleaned_data['img']
 		profile.save()
-		return render(request,"books/index.html")
+		return render(request,"books/home.html")
 	else: 
 		return redirect('books:register')
+
 def register (request):
 	regForm = RegistrationForm()
 	logForm = LoginForm()
@@ -67,4 +72,17 @@ def home (request):
 
 def logout(request):
     authlogout(request)
-    return redirect('books:login')
+    return redirect('books:register')
+
+
+def service1(request, id):
+    book = get_object_or_404(Book, id=id)
+    rateSum = 0
+    counter = 0
+
+    for item in book.profilebook_set.all():
+        rateSum += item.rate
+        counter += 1
+
+    rateAverage = math.ceil(rateSum / counter)    
+    return JsonResponse(rateAverage, safe=False)
