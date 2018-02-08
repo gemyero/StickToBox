@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>All Categories</title>
+  <title>All Authors</title>
 
   <!-- Bootstrap -->
   <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}">
@@ -83,26 +83,28 @@
     </nav>
 
     <div class="row longp-3">
-        <div class="container">
-            <h1>Category {{ category.name }}</h1>
-          </div>
+
+      <div class="container">
+        <h1>All Authors</h1>
+      </div>
+       
       <div class="container col-10 long p-3">
         <table class="table table-responsive table-hover table-striped">
           <thead align="center">
             <tr class="table-info">
-              <th>Book Number</th>
-              <th>Book Picture</th>
-              <th>Book Name</th>
+              <th>Author Number</th>
+              <th>Author Picture</th>
+              <th>Author Name</th>
             </tr>
           </thead>
           <tbody>
-            {% for item in category.book_set.all %}
+            {% for item in author_list %}
             <tr>
               <td>{{ forloop.counter }}</td>
-              <td><img src="{{ item.image.url }}" alt=""></td>
-              <td><a href="{% url 'book-detail' item.id %}">{{ item.title }}</a></td>
+              <td><img src="{{ item.picture.url }}" alt="" height="100" width="100"></td>
+              <td><a href="{% url 'author-detail' item.id %}">{{ item.full_name }}</a></td>
             </tr>
-            {% endfor %}
+            {% endfor%}
           </tbody>
         </table>
       </div>

@@ -11,20 +11,20 @@ from django.views.generic import ListView, DetailView
 from .forms import RegistrationForm, LoginForm
 
 # Create your views here.
-class authors(ListView):
-	model = Author		
-
-class books(ListView):
-	model = Book
-
-class CategoryList(ListView):
-    model = Category
-
 class AuthorView(DetailView):
+    model = Author
+
+class AuthorList(ListView):
     model = Author
 
 class BookView(DetailView):
     model = Book
+
+class BookList(ListView):
+    model = Book
+
+class CategoryList(ListView):
+    model = Category
 
 class CategoryView(DetailView):
     model = Category

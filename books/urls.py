@@ -1,19 +1,19 @@
 from django.urls import path,re_path
 from . import views
 
-app_name='books'
+# app_name='books'
 urlpatterns=[
 	# re_path(r'^login/', views.login),
 	# re_path(r'^register/', views.register, name='register'),
+	re_path(r'^$',views.home),
 	re_path(r'^$',views.register, name='register'),
-	re_path(r'^login$',views.checkLogin, name='checkLogin'),
-	re_path(r'^reg$',views.checkRegister, name='checkRegister'),
+	re_path(r'^login$',views.checkLogin, name='check-login'),
+	re_path(r'^reg$',views.checkRegister, name='check-register'),
 	re_path(r'^home/', views.home, name='home'),
-	re_path(r'^author/([0-9]+)/', views.AuthorView, name='AuthorView'),
-	re_path(r'^authors/', views.authors.as_view(), name='authors'),
-	re_path(r'^book/([0-9]+)/', views.BookView, name='BookView'),
-	re_path(r'^books/', views.books.as_view(), name='books'),
-	re_path(r'^category/(?P<id>[0-9]+/)', views.CategoryView, name='CategoryView'),
-	re_path(r'^categories/', views.CategoryList.as_view(), name='CategoryList'),
-
+	path('author/<int:pk>', views.AuthorView.as_view(), name='author-detail'),
+	path('authors/', views.AuthorList.as_view(), name='author-list'),
+	path('book/<int:pk>', views.BookView.as_view(), name='book-detail'),
+	path('books/', views.BookList.as_view(), name='book-list'),
+	path('categories/', views.CategoryList.as_view(), name='category-list'),
+	path('categories/<int:pk>', views.CategoryView.as_view(), name='category-detail'),
 ]
