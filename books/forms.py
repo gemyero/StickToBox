@@ -1,12 +1,12 @@
 from django import forms
 
 class RegistrationForm(forms.Form):
-    username = forms.CharField(label="User Name", widget=forms.TextInput(attrs={'placeholder': 'Type your Username','class':'full-width has-padding has-border','id':'signin-username'}), max_length=25)
-    email = forms.EmailField(label="Email",widget=forms.TextInput(attrs={'placeholder': 'Type your Email','class':'full-width has-padding has-border','id':'signin-email'}),max_length=50)
-    password = forms.CharField(label="Password", widget=forms.TextInput(attrs={'placeholder': 'Type your Password','class':'full-width has-padding has-border','id':'signin-password'}),min_length=6)
-    repass = forms.CharField(label="Re-type Password",widget=forms.TextInput(attrs={'placeholder': 'Re-type Password','class':'full-width has-padding has-border','id':'signin-repass'}),min_length=6)
-    img = forms.ImageField(label="Image")
+    username = forms.CharField(label="User Name", widget=forms.TextInput(attrs={'placeholder': 'Type your Username','class':'form-control','id':'email-signup'}), max_length=25)
+    email = forms.EmailField(label="Email",widget=forms.TextInput(attrs={'placeholder': 'email@example.com','class':'form-control','id':'email-signup'}),max_length=50)
+    password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'placeholder': 'Type your Password','class':'form-control','id':'password-signup'}),min_length=6)
+    repass = forms.CharField(label="Retype Password",widget=forms.PasswordInput(attrs={'placeholder': 'Retype Password','class':'form-control','id':'password-confirm-signup'}),min_length=6)
+    img = forms.ImageField(label="Profile Picture")
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label="User Name", widget=forms.TextInput(attrs={'placeholder': 'Type your Username','class':'full-width has-padding has-border','id':'signin-username'}), max_length=25)
-    password = forms.CharField(label="Password", widget=forms.TextInput(attrs={'placeholder': 'Type your Password','class':'full-width has-padding has-border','id':'signin-password'}),min_length=6)
+    username = forms.CharField(label="User Name", widget=forms.TextInput(attrs={'placeholder': 'Type your Username','class':'form-control','id':'email-login'}), max_length=25)
+    password = forms.CharField(label="Password", widget=forms.PasswordInput(attrs={'placeholder': 'Type your Password','class':'form-control','id':'password'}),min_length=6)

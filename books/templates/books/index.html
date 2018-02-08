@@ -1,90 +1,99 @@
-<!DOCTYPE html>
-<html lang="en" >
-
+<!doctype html {% load static %}>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Responsive Login/Signup Modal Window</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"></script>
-
-<link href='https://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/reset.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-
-  
-      <link rel="stylesheet" href="../static/css/style.css">
-
-  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <title>Log In</title> -->
+  <title>
+    {% if user.is_authenticated %}
+      Home
+    {% else %}
+      Stick To Box
+    {% endif %}
+  </title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}"> <!-- bootstrap default styling file-->
+  <!-- <link rel="stylesheet" href="{% static "css/myorders.css" %}"> -->
 </head>
-
 <body>
+      <!-- Navigation Bar-->
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'books:home' %}">StickToBox</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="#">Categories</a>
+        <a class="nav-item nav-link" href="#">Books</a>
+      </div>
+      {% if user.is_authenticated %}
+        <!-- if logged in -->
+        <img class="d-inline-block " src="#" alt="">
+        <a class="nav-item nav-link" href="#">log out</a>
+        <!-- if logged in -->
+      {% else %}
+        <!-- if not logged in -->
+        <form class="form-inline" action="{% url 'books:checkLogin' %}" method="POST" > <!-- make it not flex ??-->
+          {% csrf_token %}
+          {% for field in lform %}
+          <div class="form-group px-1">
+            {{ field }}
+          </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+        <!-- if not logged in -->
+      {% endif %}
 
-  <body>
-	<header role="banner">
-		<div id="cd-logo"><a href="#0"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-logo_1.svg" alt="Logo"></a></div>
-
-		<nav class="main-nav">
-			<ul>
-				<!-- inser more links here -->
-				<li><a class="cd-signin">Sign in</a></li>
-				<li><a class="cd-signup">Sign up</a></li>
-			</ul>
-		</nav>
-	</header>
-
-	<div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
-		<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
-			<ul class="cd-switcher">
-				<li><a>Sign in</a></li>
-				<li><a>New account</a></li>
-			</ul>
-
-			<div id="cd-login"> <!-- log in form -->
-				<form action="{% url 'books:checkLogin' %}" method="POST" class="cd-form"> 
-					{% csrf_token %}
-					{% for field in lform %}
-					<div class="fieldset">
-						<label class="image-replace cd-{{field.name}}" for="signup-{{field.name}}">			{{field.name}}
-						</label>
-						<p>
-							{{ field }}
-						</p>
-						<span class="cd-error-message">{{ field.errors }}</span>
-					</div>
-					{% endfor %}
-					<p class="fieldset">
-						<input class="full-width" type="submit" value="Login">
-					</p>
-					
-				</form>
-				
-				{# <p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p> #}
-				<!-- <a href="#0" class="cd-close-form">Close</a> -->
-			</div> <!-- cd-login -->
-
-			<div id="cd-signup"> <!-- sign up form -->
-				<form action="{% url 'books:checkRegister' %}" class="cd-form" enctype="multipart/form-data" method="POST"> 
-					{% csrf_token %}
-					{% for field in rform %}
-					<div class="fieldset">
-						<label class="image-replace cd-{{field.name}}" for="signup-{{field.name}}">			{{field.name}}
-						</label>
-						<p>
-							{{ field }}
-						</p>
-						<span class="cd-error-message">{{ field.errors }}</span>
-					</div>
-					{% endfor %}
-					<p class="fieldset">
-						<input class="full-width" type="submit" value="Create Account">
-					</p>
-				</form>
-
-		</div> <!-- cd-user-modal-container -->
-	</div> <!-- cd-user-modal -->
+    </div>
+  </nav>
+  <!-- Navigation Bar-->
+  <!-- Body -->
+  <div class="container-fluid p-5">
+    <div class="row">
+      <!-- body block-->
+      <div class="col m-1">
+        <div class="row">
+          <!-- Image -->
+          <img class="bg-dark m-1" src="#" alt="StickToBox" width="200px" height="200px">
+          <!-- Image -->
+          <!-- Quote 1 -->
+          <div class="col border m-1 text-xl-center bg-light"><h1>{{ user }}</h1></div>
+          <!-- Quote 1 -->
+          <!-- Quote 2 -->
+          <div class="col border m-1 text-xl-center bg-light"><h1>Quote 2</h1></div>
+          <!-- Quote 2 -->
+        </div>
+        <div class="row">
+          <!-- Categories block -->
+          <div class="col-md-4 border m-1 text-xl-center bg-light"><h1>Categories</h1></div>
+          <!-- Categories block -->
+          <!-- Books block -->
+          <div class="col border m-1 text-xl-center bg-light"><h1>Books</h1></div>
+          <!-- Books block -->
+        </div>
+        
+      </div>
+      <!-- body block-->
+      <!-- Sign Up block -->
+      <div class="col-md-3 p-2">
+        <form action="{% url 'books:checkRegister' %}" class="bg-light border p-4" method="POST" enctype="multipart/form-data" >
+         {% csrf_token %}
+		 {% for field in rform %}
+          <div class="form-group">
+            <label>{{field.label}}</label>
+            {{ field }}
+          </div>
+          {% endfor %}
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+      </div>
+      <!-- Sign Up block -->
+    </div>
+  </div>
+  <!-- Body -->
 </body>
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-  <script  src="../static/js/index.js"></script>
-
-</body>
-
+  <!-- <script src="{% static "js/login.js" %}"></script> -->
 </html>

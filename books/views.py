@@ -36,26 +36,24 @@ def checkLogin (request):
 		user = authenticate(username=uname,password=passwd)
 		if user is not None:
 			authlogin(request,user)
-			return redirect('books:home')
+			return render(request,"books/index.html")
 		else :
 			return redirect('books:register')
 
 def checkRegister(request):
 	form = RegistrationForm(request.POST, request.FILES)
 	if form.is_valid():
-		
+		profile = Profile()
 		usr = User(request.POST, request.FILES['img'])
 		prof = Profile(request.FILES['img'])
 		username = request.POST.get('username')
-		# user=User.objects.filter(username=username).exists()
 		email = request.POST.get('email')
 		password = request.POST.get('password')
-		img = request.FILES.get('img')
-		# img.upload_to='images/users/'
-		# usr.save()
 		newUser=User.objects.create_user(username=username,email=email,password=password)
-		Profile.objects.filter(user=newUser).update(profile_picture=img)
-		return render(request,"books/home.html")
+		profile.user=newUser
+		profile.profile_picture=form.cleaned_data['img']
+		profile.save()
+		return render(request,"books/index.html")
 	else: 
 		return redirect('books:register')
 def register (request):
@@ -63,10 +61,10 @@ def register (request):
 	logForm = LoginForm()
 	return render(request,'books/index.html',{'rform':regForm, 'lform':logForm})
 
-# @login_required()
+@login_required(login_url='books:register')
 def home (request):
 	return render(request,"books/home.html")
 
 def logout(request):
     authlogout(request)
-    return redirect('library:login')
+    return redirect('books:login')
