@@ -3,36 +3,42 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <title>Log In</title> -->
   <title>
-    {% if user.is_authenticated %}
-      Home
-    {% else %}
-      Stick To Box
-    {% endif %}
+  {% if user.is_authenticated %}
+    Home
+  {% else %}
+    Stick To Box
+  {% endif %}
   </title>
   <!-- Bootstrap -->
   <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}"> <!-- bootstrap default styling file-->
   <!-- <link rel="stylesheet" href="{% static "css/myorders.css" %}"> -->
 </head>
 <body>
-      <!-- Navigation Bar-->
-  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+  <!-- Navigation Bar-->
+  <nav class="navbar navbar-expand-sm navbar-light bg-light container">
     <a class="navbar-brand" href="#">StickToBox</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="#">Authors<span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link" href="#">Categories</a>
         <a class="nav-item nav-link" href="#">Books</a>
       </div>
       {% if user.is_authenticated %}
-        <!-- if logged in -->
-        <img class="d-inline-block " src="#" alt="">
-        <a class="nav-item nav-link" href="#">log out</a>
-        <!-- if logged in -->
+      <!-- if logged in -->
+      <div class="nav-item nav-link">
+        <a href="#">
+          <img class="avatar img-responsive" style="height: 32px; width: 32px" src="https://pickaface.net/gallery/avatar/unr_matis_180208_0805_3eorw.png">
+          <span class="header-username">Chuck Norris</span>
+        </a>
+        <!-- <img class="d-inline-block " src="#" alt=""> -->
+        | 
+        <a href="#">log out</a>
+      </div>
+      <!-- if logged in -->
       {% else %}
         <!-- if not logged in -->
         <form class="form-inline"> <!-- make it not flex ??-->
@@ -57,7 +63,7 @@
   </nav>
   <!-- Navigation Bar-->
   <!-- Body -->
-  <div class="container-fluid p-5">
+  <div class="container p-5">
     <div class="row">
       <!-- body block-->
       <div class="col m-1">
@@ -83,6 +89,7 @@
         
       </div>
       <!-- body block-->
+      {% if not user.is_authenticated %}
       <!-- Sign Up block -->
       <div class="col-md-3 p-2">
         <form class="bg-light border p-4">
@@ -106,6 +113,8 @@
         </form>
       </div>
       <!-- Sign Up block -->
+      {% endif %}
+
     </div>
   </div>
   <!-- Body -->
