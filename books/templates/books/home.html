@@ -31,7 +31,7 @@
       <!-- if logged in -->
       <div class="nav-item nav-link">
         <a href="#">
-          <img class="avatar img-responsive" style="height: 32px; width: 32px" src="https://pickaface.net/gallery/avatar/unr_matis_180208_0805_3eorw.png">
+          <img class="avatar img-responsive mr-1" style="height: 30px; width: 30px" src="https://pickaface.net/gallery/avatar/unr_matis_180208_0805_3eorw.png">
           <span class="header-username">Chuck Norris</span>
         </a>
         <!-- <img class="d-inline-block " src="#" alt=""> -->
@@ -42,19 +42,19 @@
       {% else %}
       <!-- if not logged in -->
       <form class="form-inline"> <!-- make it not flex ??-->
-        <div class="form-group px-1">
+        <div class="form-group p-1">
           <input type="email" class="form-control" id="email-login" placeholder="Sign In">
         </div>
-        <div class="form-group px-1">
+        <div class="form-group p-1">
           <input type="password" class="form-control" id="password-login" placeholder="Password">
         </div>
-        <div class="form-check px-1">
+        <div class="form-check p-1">
           <input type="checkbox" class="form-check-input" id="remember-me-login">
           <label class="form-check-label" for="remember-me-login">
             Remember me
           </label>
         </div>
-        <button type="submit" class="btn btn-primary">Sign In</button>
+        <button type="submit p-1" class="btn btn-primary">Sign In</button>
       </form>
       <!-- if not logged in -->
       {% endif %}
