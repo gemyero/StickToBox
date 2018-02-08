@@ -6,20 +6,31 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import make_password, check_password
 from django.views import generic
 from django.db.models import Q
-from .models import Book, Author, Category
+from .models import *
 from django.views.generic import ListView, DetailView
 from .forms import RegistrationForm, LoginForm
 
 # Create your views here.
+class authors(ListView):
+	model = Author		
 
-def author(request):
-    return render(request, 'author.html')
+class books(ListView):
+	model = Book
 
-def book(request):
-    return render(request, 'book.html')
+class CategoryList(ListView):
+    model = Category
+
+class AuthorView(DetailView):
+    model = Author
+
+class BookView(DetailView):
+    model = Book
+
+class CategoryView(DetailView):
+    model = Category
 
 def checkLogin (request):
-	# if form.method=="POST":
+	if request.method == 'POST':
 		uname = request.POST.get('username')
 		passwd = request.POST.get('password')
 		user = authenticate(username=uname,password=passwd)
@@ -30,9 +41,23 @@ def checkLogin (request):
 			return redirect('books:register')
 
 def checkRegister(request):
-	pass
-
-
+	form = RegistrationForm(request.POST, request.FILES)
+	if form.is_valid():
+		
+		usr = User(request.POST, request.FILES['img'])
+		prof = Profile(request.FILES['img'])
+		username = request.POST.get('username')
+		# user=User.objects.filter(username=username).exists()
+		email = request.POST.get('email')
+		password = request.POST.get('password')
+		img = request.FILES.get('img')
+		# img.upload_to='images/users/'
+		# usr.save()
+		newUser=User.objects.create_user(username=username,email=email,password=password)
+		Profile.objects.filter(user=newUser).update(profile_picture=img)
+		return render(request,"books/home.html")
+	else: 
+		return redirect('books:register')
 def register (request):
 	regForm = RegistrationForm()
 	logForm = LoginForm()
@@ -42,28 +67,6 @@ def register (request):
 def home (request):
 	return render(request,"books/home.html")
 
-
-# def author (request):
-# 	pass
-
-
-class authors(ListView):
-	model = Author		
-				
-
-
-# def book (request):
-# 	pass
-
-
-class books(ListView):
-	model = Book
-
-
-# def category (request):
-# 	pass
-
-
-class categories(ListView):
-	model = Category
-
+def logout(request):
+    authlogout(request)
+    return redirect('library:login')

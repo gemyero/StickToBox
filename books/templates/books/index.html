@@ -57,13 +57,13 @@
 					
 				</form>
 				
-				<p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p>
+				{# <p class="cd-form-bottom-message"><a href="#0">Forgot your password?</a></p> #}
 				<!-- <a href="#0" class="cd-close-form">Close</a> -->
 			</div> <!-- cd-login -->
 
 			<div id="cd-signup"> <!-- sign up form -->
-				<form action="{% url 'books:checkLogin' %}" class="cd-form"> {% csrf_token %}
-
+				<form action="{% url 'books:checkRegister' %}" class="cd-form" enctype="multipart/form-data" method="POST"> 
+					{% csrf_token %}
 					{% for field in rform %}
 					<div class="fieldset">
 						<label class="image-replace cd-{{field.name}}" for="signup-{{field.name}}">			{{field.name}}

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Book</title>
+    <title>{{ book.title }}</title>
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}"> <!-- bootstrap default styling file-->
@@ -61,7 +61,7 @@
           <ul class="navbar-nav">
 
           	<li class="nav-item">
-          	    <a class="nav-link" href="all_products.html">Categories</a>
+          	    <a class="nav-link" href="{% url 'category-list' %}">Categories</a>
           	</li>
             
             <li class="nav-item ">
@@ -86,27 +86,27 @@
       <div class="row bord p-3">
         <div class="col-2 long" >
           <div align="center">
-            <img class="imag img-fluid" src="{% static "img/book.png" %}" alt="">
+            <img class="imag img-fluid" src="{{ book.image.url }}" alt="">
           </div>
         </div>
 
         <div class="col-10 long">
           <div class="row">
-            Name
+            Name : {{ book.title }}
           </div>
           <div class="row">
             Rating
           </div>
 	      <div class="rating">
-			<span title="5">☆</span>
-			<span title="4">☆</span>
-			<span title="3">☆</span>
-			<span title="2">☆</span>
 			<span title="1">☆</span>
+			<span title="2">☆</span>
+			<span title="3">☆</span>
+			<span title="4">☆</span>
+			<span title="5">☆</span>
 		  </div>
           <div class="row">
             <div class="col-12">
-            	<a href="author.html" title="Author Page">{{author}}</a>            	
+            	<a href="{% url 'author-detail' book.author.all.0.id %}">{{book.author.all.0.full_name}}</a>            	
             </div>
           </div>
         </div>
@@ -115,46 +115,31 @@
       <div class="row long p-3">
         <div class="col-2">
           <div class="row p-3">
-            Description
+            <p class="row">Description</p>
           </div>
           <div class="row bord">
-            Description Description Description Description Description Description vDescription Description Description Description Description Description 
+            {{ book.summary }}
           </div>
         </div>
 
         <div class="col-10 p-3">
           <div class="row">
-          	Reviews
+          	<p class="row">Reviews</p>
           </div>
           <div class="row bord">
           	<div class="col-12">
-	          	<div class="row">
+              {% for commentObject in book.profilebook_set.all %}
+              <div class="row">
 	          		<div class="col-2">
 	            		<img class="imag img-fluid" src="{% static "img/book.png" %}" alt="">
 	          		</div>
-	          		<div class="col-7">
+                <div class="col-7">
 	          			<p>
-	          				first commentttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-	          				ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-	          				ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-	          				ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-	          				ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-	          				tttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
-	          				ttttttttttttttttttttttttttttttttttt
+	          				{{ commentObject.comment }}
 	          			</p>
 	          		</div>
-	          	</div>
-	          	<div class="row">
-	          		<div class="col-2">
-	            			<img class="imag img-fluid" src="../img/book.png" alt="">
-	          		</div>
-	          		<div class="col-7">
-	          			second comment second comment second comment second comment second comment 
-	          			second comment second comment second comment 
-	          			second comment second comment second comment 
-	          			second comment vsecond comment 
-	          		</div>
-	          	</div>	
+              </div>	
+              {% endfor %}
           </div>
          </div>	
       </div>

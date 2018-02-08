@@ -75,28 +75,26 @@
     </nav>
 
     <div class="row longp-3">
-
-      <div class="container">
-        <h1>All Categories</h1>
-      </div>
-       
+        <div class="container">
+            <h1>Category {{ category.name }}</h1>
+          </div>
       <div class="container col-10 long p-3">
         <table class="table table-responsive table-hover table-striped">
           <thead align="center">
             <tr class="table-info">
-              <th>Category Number</th>
-              <th>Category Picture</th>
-              <th>Category Name</th>
+              <th>Book Number</th>
+              <th>Book Picture</th>
+              <th>Book Name</th>
             </tr>
           </thead>
           <tbody>
-            {% for item in category_list %}
+            {% for item in category.book_set.all %}
             <tr>
               <td>{{ item.id }}</td>
-              <td><img src="{{ item.image.url }}" alt="" height="100" width="100"></td>
-              <td><a href="{% url 'category-detail' item.id %}">{{ item.name }}</a></td>
+              <td><img src="{{ item.image.url }}" alt=""></td>
+              <td><a href="{% url 'book-detail' item.id %}">{{ item.title }}</a></td>
             </tr>
-            {% endfor%}
+            {% endfor %}
           </tbody>
         </table>
       </div>
