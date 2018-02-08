@@ -11,26 +11,27 @@
 <body>
   <!-- Navigation Bar-->
   <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'home' %}">StickToBox</a>
+    <a class="navbar-brand" href="{% url 'books:home' %}">StickToBox</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link" href="{% url 'author-list' %}">Authors<span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="{% url 'category-list' %}">Categories</a>
-        <a class="nav-item nav-link" href="{% url 'book-list' %}">Books</a>
+        <a class="nav-item nav-link" href="{% url 'books:author-list' %}">Authors<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="{% url 'books:category-list' %}">Categories</a>
+        <a class="nav-item nav-link" href="{% url 'books:book-list' %}">Books</a>
       </div>
       {% if user.is_authenticated %}
       <!-- if logged in -->
       <div class="nav-item nav-link">
-        <a href="#">
-          <img class="avatar img-responsive mr-1" style="height: 30px; width: 30px" src="https://pickaface.net/gallery/avatar/unr_matis_180208_0805_3eorw.png">
-          <span class="header-username">Chuck Norris</span>
+        <a href="#"> <!-- edit profile page -->
+          <img class="avatar img-responsive mr-1" style="height: 30px; width: 30px" src="
+          {{ user_avatar }}">
+          <span class="header-username">{{ user_first_name }} {{ user_last_name }}</span>
         </a>
         <!-- <img class="d-inline-block " src="#" alt=""> -->
         | 
-        <a href="#">log out</a>
+        <a href="{% url 'books:logout' %}">log out</a>
       </div>
       <!-- if logged in -->
       {% else %}
