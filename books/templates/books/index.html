@@ -18,7 +18,7 @@
 <body>
       <!-- Navigation Bar-->
   <nav class="navbar navbar-expand-sm navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'books:home' %}">StickToBox</a>
+    <a class="navbar-brand" href="{% url 'books:register' %}">StickToBox</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -35,7 +35,7 @@
         <!-- if logged in -->
       {% else %}
         <!-- if not logged in -->
-        <form class="form-inline" action="{% url 'books:checkLogin' %}" method="POST" > <!-- make it not flex ??-->
+        <form class="form-inline" action="{% url 'books:check-login' %}" method="POST" > <!-- make it not flex ??-->
           {% csrf_token %}
           {% for field in lform %}
           <div class="form-group px-1">
@@ -79,7 +79,7 @@
       <!-- body block-->
       <!-- Sign Up block -->
       <div class="col-md-3 p-2">
-        <form action="{% url 'books:checkRegister' %}" class="bg-light border p-4" method="POST" enctype="multipart/form-data" >
+        <form action="{% url 'books:check-register' %}" class="bg-light border p-4" method="POST" enctype="multipart/form-data" >
          {% csrf_token %}
 		 {% for field in rform %}
           <div class="form-group">

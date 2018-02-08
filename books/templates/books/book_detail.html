@@ -69,15 +69,15 @@
         <ul class="navbar-nav">
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'author-list' %}">Authors</a>
+            <a class="nav-link" href="{% url 'books:author-list' %}">Authors</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'book-list' %}">Books</a>
+            <a class="nav-link" href="{% url 'books:book-list' %}">Books</a>
           </li>
 
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'category-list' %}">Categories</a>
+            <a class="nav-link" href="{% url 'books:category-list' %}">Categories</a>
           </li>
 
           <li class="nav-item ">
@@ -111,7 +111,7 @@
           Name : {{ book.title }}  
         </div>
         <div class="row">
-          By: <a href="{% url 'author-detail' book.author.all.0.id %}">{{book.author.all.0.full_name}}</a>
+          By: <a href="{% url 'books:author-detail' book.author.all.0.id %}">{{book.author.all.0.full_name}}</a>
         </div>
         <div class="row">
           Rating
@@ -195,7 +195,7 @@
                   printRate(response);
               }
           };
-          xhttp.open("GET", "{% url 'service1' book.id %}", true);
+          xhttp.open("GET", "{% url 'books:service1' book.id %}", true);
           xhttp.send();
       }
 
