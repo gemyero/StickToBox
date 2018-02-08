@@ -23,9 +23,9 @@
     </button>
     <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-item nav-link" href="#">Authors<span class="sr-only">(current)</span></a>
-        <a class="nav-item nav-link" href="#">Categories</a>
-        <a class="nav-item nav-link" href="#">Books</a>
+        <a class="nav-item nav-link" href="{% url 'author-list' %}">Authors<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="{% url 'category-list' %}">Categories</a>
+        <a class="nav-item nav-link" href="{% url 'book-list' %}">Books</a>
       </div>
       {% if user.is_authenticated %}
       <!-- if logged in -->
@@ -40,25 +40,24 @@
       </div>
       <!-- if logged in -->
       {% else %}
-        <!-- if not logged in -->
-        <form class="form-inline"> <!-- make it not flex ??-->
-          <div class="form-group px-1">
-            <input type="email" class="form-control" id="email-login" placeholder="Sign In">
-          </div>
-          <div class="form-group px-1">
-            <input type="password" class="form-control" id="password-login" placeholder="Password">
-          </div>
-          <div class="form-check px-1">
-            <input type="checkbox" class="form-check-input" id="remember-me-login">
-            <label class="form-check-label" for="remember-me-login">
-              Remember me
-            </label>
-          </div>
-          <button type="submit" class="btn btn-primary">Sign In</button>
-        </form>
-        <!-- if not logged in -->
+      <!-- if not logged in -->
+      <form class="form-inline"> <!-- make it not flex ??-->
+        <div class="form-group px-1">
+          <input type="email" class="form-control" id="email-login" placeholder="Sign In">
+        </div>
+        <div class="form-group px-1">
+          <input type="password" class="form-control" id="password-login" placeholder="Password">
+        </div>
+        <div class="form-check px-1">
+          <input type="checkbox" class="form-check-input" id="remember-me-login">
+          <label class="form-check-label" for="remember-me-login">
+            Remember me
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Sign In</button>
+      </form>
+      <!-- if not logged in -->
       {% endif %}
-
     </div>
   </nav>
   <!-- Navigation Bar-->

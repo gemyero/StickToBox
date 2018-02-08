@@ -45,10 +45,18 @@
 
         <div class="collapse navbar-collapse position-relative" id="navbarNav">
           <ul class="navbar-nav">
+            
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'author-list' %}">Authors</a>
+          </li>
 
-          	<li class="nav-item">
-          	    <a class="nav-link" href="{% url 'category-list' %}">Categories</a>
-          	</li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'book-list' %}">Books</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'category-list' %}">Categories</a>
+      </li>
             
             <li class="nav-item ">
               <a class="nav-link" href="../php/logout.php">Logout</a>
@@ -115,7 +123,7 @@
                 
                 {% for book in author.book_set.all %}
                   <tr>
-                    <td>{{ book.id }}</td>
+                    <td>{{ forloop.counter }}</td>
                     <td><img src="{{ book.image.url }}" alt=""></td>
                     <td><a href="{% url 'book-detail' book.id %}">{{ book.title }}</a></td>
                   </tr>
