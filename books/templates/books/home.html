@@ -16,7 +16,7 @@
         <div class="row">
           <!-- Categories block -->
           <div class="col-md my-3 bg-light">
-            <h2 class="text-center">Categories</h2>
+            <h3 class="text-center m-1">Categories</h3>
             <ul>
               {% for item in category_list %}
               <li class=""><a href="{% url 'books:category-detail' item.id %}">{{ item.name }}</a></li>
@@ -30,8 +30,8 @@
         <!-- user information -->
         <div class="row">
           <div class="col bg-light mb-2 mx-2">
-            <h3 class="m-3">Username: {{ request.user.username }}</h3>
-            <h3 class="m-3">Email: {{ request.user.email }}</h3>
+            <h3 class="m-3">Username: <span class="text-primary">{{ request.user.username }}</span></h3>
+            <h3 class="m-3">Email: <span class="text-primary">{{ request.user.email }}</span></h3>
           </div>
         </div>
         <!-- user information -->
@@ -57,19 +57,6 @@
           </div>
         </div>
       </div>
-    </div>
-    <!-- second row -->
-    <div class="row">
-      <!-- Books block -->
-      <div class="col-md m-2 bg-light">
-        <h2 class="text-center">Books</h2>
-        <ul>
-          {% for item in book_list %} <!-- ???????????? -->
-          <li><a href="{% url 'books:book-detail' item.id %}">{{ item.title }}</a></li>
-          {% endfor %}
-        </ul>
-      </div>
-      <!-- Books block -->
     </div>
   </div>
 </div>

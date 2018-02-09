@@ -40,7 +40,7 @@ def checkLogin(request):
 		user = authenticate(username=uname,password=passwd)
 		if user is not None:
 			authlogin(request, user)
-			return render(request,"books/home.html")
+			return redirect('books:home')
 		else:
 			return redirect('books:register')
 
@@ -58,7 +58,7 @@ def checkRegister(request):
 		profile.user=newUser
 		profile.profile_picture=form.cleaned_data['img']
 		profile.save()
-		return render(request,"books/home.html")
+		return redirect('books:home')
 	else: 
 		return redirect('books:register')
 
