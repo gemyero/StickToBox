@@ -1,136 +1,128 @@
-  <style type="text/css" media="screen">
-    /*   .bord{
-        border: 2px solid black;
-      }
+{% extends 'books/base.html' %}
+{% load static %}
+{% block content %}
+<style type="text/css" media="screen">
+  .imag {
+    height: 130px;
+  }
 
-      .long{
-        height: 400px;
-        border: 2px solid black;
-      }
-      table tr td{
-        width: 500px;
-        padding: 50px;
-      }
-*/
+  .rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+  }
 
-    .imag {
-      height: 130px;
-    }
+  .rating>span {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+  }
 
-    .rating {
-      unicode-bidi: bidi-override;
-      direction: rtl;
-    }
-
-    .rating>span {
-      display: inline-block;
-      position: relative;
-      width: 1.1em;
-    }
-
-    .rating>span:hover:before,
-    .rating>span:hover~span:before {
-      content: "\2605";
-      position: absolute;
-    }
-  </style>
-
-    <div class="row bord p-3">
-      <div class="col-2 long">
-        <div align="center">
-          <img class="imag img-fluid" src="{{ book.image.url }}" alt="">
+  .rating>span:hover:before,
+  .rating>span:hover~span:before {
+    content: "\2605";
+    position: absolute;
+  }
+</style>
+<!-- body block-->
+<div class="row">
+  <div class="col m-1">
+    <div class="row">
+      <div class="mr-3">
+        <!-- Image -->
+        <div class="row">
+          <div class="border">
+            <img class="m-1" src="{{ book.image.url }}" alt="StickToBox" width="200px" height="250px" style="object-fit: cover;">
+          </div>
         </div>
+        <!-- Image -->
       </div>
-
-      <div class="col-10 long">
+      <div class="col m-2">
+        <h1>Book Information</h1>
+        <!-- Book information -->
         <div class="row">
-          Name : {{ book.title }}  
+          <div class="col bg-light mb-2 mx-2">
+            <h3 class="m-3">Book Information</h3>
+            <h5 class="mx-3">Name: <span class="">{{ book.title }}</span></h5>
+            <h5 class="mx-3">By: <span class="">{{book.author.all.0.full_name}}</span></h5>
+            <h5 class="mx-3 mb-3">Rating: <span class="">
+              <div id="rate" class="rating">
+              <input type="radio" id="star5" name="rating" value="5" />
+              <label for="star5" title="Rocks!">5 stars</label>
+              <input type="radio" id="star4" name="rating" value="4" />
+              <label for="star4" title="Pretty good">4 stars</label>
+              <input type="radio" id="star3" name="rating" value="3" />
+              <label for="star3" title="Meh">3 stars</label>
+              <input type="radio" id="star2" name="rating" value="2" />
+              <label for="star2" title="Kinda bad">2 stars</label>
+              <input type="radio" id="star1" name="rating" value="1" />
+              <label for="star1" title="Sucks big time">1 star</label>
+              </div></span>
+            </h5>
+          </div>
+          <div class="col bg-light mb-2 mx-2">
+            <h3 class="m-3">Description</h3>
+            <p class="text-justify mx-3">{{ book.summary }}</p>
+          </div>
         </div>
+        <!-- Book information -->
         <div class="row">
-          By: <a href="{% url 'books:author-detail' book.author.all.0.id %}">{{book.author.all.0.full_name}}</a>
-        </div>
-        <div class="row">
-          Rating
-        </div>
-        <div id="rate" class="rating">
-          <input type="radio" id="star5" name="rating" value="5" />
-          <label for="star5" title="Rocks!">5 stars</label>
-          <input type="radio" id="star4" name="rating" value="4" />
-          <label for="star4" title="Pretty good">4 stars</label>
-          <input type="radio" id="star3" name="rating" value="3" />
-          <label for="star3" title="Meh">3 stars</label>
-          <input type="radio" id="star2" name="rating" value="2" />
-          <label for="star2" title="Kinda bad">2 stars</label>
-          <input type="radio" id="star1" name="rating" value="1" />
-          <label for="star1" title="Sucks big time">1 star</label>
-        </div>
-      </div>
-
-    </div>
-    <div class="row long p-3">
-      <div class="col-2">
-        <div class="row p-3">
-          <p class="row">Description</p>
-        </div>
-        <div class="row bord">
-          {{ book.summary }}
-        </div>
-      </div>
-
-      <div class="col-10 p-3">
-        <div class="row">
-          <p class="row">Reviews</p>
-        </div>
-        <div class="row bord">
-          <div class="col-12">
-            {% for commentObject in book.profilebook_set.all %}
+          <div class="col-10 p-3">
+            <div class="row"><h2 class="col">Reviews</h2></div>
             <div class="row">
-              <div class="col-2">
-                <img class="imag img-fluid" src="{% static "img/book.png" %}" alt="">
-              </div>
-              <div class="col-7">
-                <p>
-                  {{ commentObject.comment }}
-                </p>
+              <div class="col border">
+                {% for commentObject in book.profilebook_set.all %}
+                <div class="row">
+                  <div class="col-md-3">
+                    <img class="m-3" style="object-fit: cover;" src="{% static "img/book.png" %}" width="80px" height="80px" alt="">
+                  </div>
+                  <div class="col m-3">
+                    <p>{{ commentObject.comment }}</p>
+                  </div>
+                </div>
+                {% endfor %}
               </div>
             </div>
-            {% endfor %}
           </div>
         </div>
       </div>
-
-      <script>
-        function rateValue() {
-          var inputs = document.getElementsByTagName('input');
-          for (var i = 0; i < inputs.length; i++) {
-              if (inputs[i].checked) {
-                  return parseInt(inputs[i].value);
-              }
-            }
+    </div>
+  </div>
+</div>
+<!-- body block-->
+<script>
+  function rateValue() {
+    var inputs = document.getElementsByTagName('input');
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].checked) {
+            return parseInt(inputs[i].value);
         }
+      }
+  }
 
-        function printRate(x) {
-            if (x >= 1 && x <= 5) {
-                document.getElementById('star'+x).checked = true;
-            } 
+  function printRate(x) {
+      if (x >= 1 && x <= 5) {
+          document.getElementById('star'+x).checked = true;
+      } 
+  }
+
+  function clearRate() {
+      var inputs = document.getElementsByTagName('input');
+      for (var i=0; i<inputs.length; i++) {
+          inputs[i].checked = false;
+      }
+  }
+
+  document.body.onload = function(e) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = this.responseText;
+            response = JSON.parse(response);
+            printRate(response);
         }
-
-        function clearRate() {
-            var inputs = document.getElementsByTagName('input');
-            for (var i=0; i<inputs.length; i++) {
-                inputs[i].checked = false;
-            }
-        }
-
-        document.body.onload = function(e) {
-          var xhttp = new XMLHttpRequest();
-          xhttp.onreadystatechange = function () {
-              if (this.readyState == 4 && this.status == 200) {
-                  var response = this.responseText;
-                  response = JSON.parse(response);
-                  printRate(response);
-              }
-          };
-          xhttp.open("GET", "{% url 'books:service1' book.id %}", true);
-          xhttp.send();
-      }</script>
+    };
+    xhttp.open("GET", "{% url 'books:service1' book.id %}", true);
+    xhttp.send();
+}
+</script>
+{% endblock %}
