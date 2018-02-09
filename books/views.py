@@ -33,34 +33,47 @@ class CategoryView(DetailView):
     model = Category
 
 
-def checkLogin(request):
-    if request.method == 'POST':
+def checkLogin (request):
+    form = LoginForm(request.POST)
+    if request.method == 'POST' :
         uname = request.POST.get('username')
         passwd = request.POST.get('password')
         user = authenticate(username=uname,password=passwd)
         if user is not None:
-            authlogin(request, user)
-            return redirect('books:home')
-        else:
-            return redirect('books:register')
+            authlogin(request,user)
+            return render(request,"books/index.html")
+        else :
+            regForm = RegistrationForm()
+            return render(request,'books/index.html',{'rform':regForm, 'lform':form, 'error':'Either Usernme or Password is not correct'})
+    else:
+        return redirect('books:register')
 
 def checkRegister(request):
     form = RegistrationForm(request.POST, request.FILES)
-    if form.is_valid():
-        profile = Profile()
-        usr = User(request.POST, request.FILES['img'])
-        prof = Profile(request.FILES['img'])
-        # Check duplicate key
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        newUser=User.objects.create_user(username=username,email=email,password=password)
-        profile.user=newUser
-        profile.profile_picture=form.cleaned_data['img']
-        profile.save()
-        return redirect('books:home')
-    else: 
-        return redirect('books:register')
+    logForm = LoginForm()
+    username = request.POST.get('username')
+    existUsr = User.objects.filter(username=username).exists()
+    if not existUsr:
+        if form.is_valid():
+            profile = Profile()
+            usr = User(request.POST, request.FILES['img'])
+            prof = Profile(request.FILES['img'])
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            repass = request.POST.get('repass')
+            if password != repass:
+                return render(request,'books/index.html',{'rform':form, 'lform':logForm, 'pass_err':'Password does not match'})
+            else :
+                newUser=User.objects.create_user(username=username,email=email,password=password)
+                profile.user=newUser
+                profile.profile_picture=form.cleaned_data['img']
+                profile.save()
+                return render(request,"books/home.html")
+        else:
+            return render(request,'books/index.html',{'rform':form, 'lform':logForm})
+    else : 
+        return render(request,'books/index.html',{'rform':form, 'lform':logForm, 'user_errors':'this user name already exists'})
+        # return redirect('books:register')
 
 def register(request):
     regForm = RegistrationForm()
@@ -97,6 +110,45 @@ def service1(request, id):
 
     rateAverage = math.ceil(rateSum / counter)    
     return JsonResponse(rateAverage, safe=False)
+
+
+def service2(request, id):
+    if request.user.is_authenticated :
+        myBook=get_object_or_404(Book,id = id)
+        rate = request.GET.get('rate')
+        profilebook = ProfileBook.objects.filter(profile=request.user.profile, book=myBook)
+        if bool(profilebook):
+            profilebook.update(rate=rate)
+        else:
+            ProfileBook.objects.create(profile=request.user.profile, book=myBook, rate=rate)
+        return JsonResponse("success",safe=False)
+    else:
+        return redirect('books:register')
+
+def service3(request):
+    status = ProfileBook.STATUS
+    return JsonResponse(status,safe=False)
+
+@login_required(redirect_field_name='returnURL', login_url='books:register')
+def Status(request, id):
+    myBook=get_object_or_404(Book, id = id)
+    profilebook = ProfileBook.objects.filter(profile=request.user.profile, book=myBook)
+    curstatus = profilebook[0].status
+    return JsonResponse(curstatus,safe=False)
+
+# @login_required(redirect_field_name='returnURL', login_url='books:register')
+def service4(request, Id):
+    if request.user.is_authenticated :
+        myBook=get_object_or_404(Book,id = Id)
+        stat = request.GET.get('status')
+        profilebook = ProfileBook.objects.filter(profile=request.user.profile, book=myBook)
+        if bool(profilebook):
+            profilebook.update(status=stat)
+        else:
+            ProfileBook.objects.create(profile=request.user.profile, book=myBook, status=stat)
+        return JsonResponse("success",safe=False)
+    else:
+        return redirect('books:register')
 
 
 def search(request):
