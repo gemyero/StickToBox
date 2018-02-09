@@ -95,3 +95,14 @@ def service1(request, id):
 
     rateAverage = math.ceil(rateSum / counter)    
     return JsonResponse(rateAverage, safe=False)
+
+
+def search(request):
+	return render(request, 'books/search.html')
+
+def searchService(request, keyword):
+	book_results = Book.objects.filter(title__iexact=keyword.strip()).values()
+	author_results = Author.objects.filter(first_name__iexact=keyword.strip()).values()
+	category_results = Category.objects.filter(name__iexact=keyword.strip()).values()
+
+	return JsonResponse({'results': [list(author_results), list(book_results), list(category_results)]})

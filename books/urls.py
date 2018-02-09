@@ -22,6 +22,7 @@ urlpatterns=[
 	path('categories/', views.CategoryList.as_view(), name='category-list'),
     path('categories/<int:pk>', views.CategoryView.as_view(), name='category-detail'),
 	path('service1/<int:id>', views.service1, name="service1"),
-	
+	path('search/', views.search, name="search"),
+	path('ssearch/<str:keyword>', views.searchService, name="search-service"),
 	#path('service2/<int:id>', views.service2, name="service2"),
 ]
