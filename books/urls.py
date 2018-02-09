@@ -3,13 +3,15 @@ from . import views
 from django.conf.urls import url
 from django.conf import settings
 from django.contrib.auth.views import logout
+# from django.views.generic import list_detail
 
 app_name = 'books'
 
 urlpatterns=[
 	# re_path(r'^login/', views.login),
-	# re_path(r'^register/', views.register, name='register'),
+	# re_path(r'^$', list_detail.object_list, all_models_dict, name='home'),
 	re_path(r'^$', views.home, name='home'),
+	re_path(r'^register/', views.register, name='register'),
 	re_path(r'^login$', views.checkLogin, name='check-login'),
     re_path(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
 	re_path(r'^reg$', views.checkRegister, name='check-register'),

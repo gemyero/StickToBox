@@ -9,6 +9,7 @@ from django.db.models import Q
 from .models import *
 from django.views.generic import ListView, DetailView
 from .forms import RegistrationForm, LoginForm
+from django.template import Context, Template
 import math
 
 # Create your views here.
@@ -41,7 +42,7 @@ def checkLogin(request):
 			authlogin(request, user)
 			return render(request,"books/home.html")
 		else:
-			return redirect('books:home')
+			return redirect('books:register')
 
 def checkRegister(request):
 	form = RegistrationForm(request.POST, request.FILES)
@@ -61,15 +62,22 @@ def checkRegister(request):
 	else: 
 		return redirect('books:register')
 
-def register (request):
+def register(request):
 	regForm = RegistrationForm()
 	logForm = LoginForm()
-	return render(request,'books/index.html', {'rform':regForm, 'lform':logForm})
+	return render(request, 'books/index.html', {'rform': RegistrationForm, 'lform': LoginForm})
 
 # @login_required(login_url='books:register')
-# @login_required(login_url='')
+@login_required(login_url='books:register')
 def home (request):
-	return render(request, 'books/index.html', {'rform': RegistrationForm, 'lform': LoginForm})
+	authors_list = Author.objects.all()[0].first_name
+	# all_models_dict = {
+	# 	"template_name": "books/home.html",
+	# 	"queryset": Author.objects.all(),
+	# 	"extra_context" : {
+	# 	}
+	# }
+	return render(request, 'books/home.html', Context({'authors_list': authors_list}))
 
 # def logout(request):
 #     authlogout(request)
