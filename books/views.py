@@ -34,52 +34,52 @@ class CategoryView(DetailView):
 
 
 def checkLogin(request):
-	if request.method == 'POST':
-		uname = request.POST.get('username')
-		passwd = request.POST.get('password')
-		user = authenticate(username=uname,password=passwd)
-		if user is not None:
-			authlogin(request, user)
-			return redirect('books:home')
-		else:
-			return redirect('books:register')
+    if request.method == 'POST':
+        uname = request.POST.get('username')
+        passwd = request.POST.get('password')
+        user = authenticate(username=uname,password=passwd)
+        if user is not None:
+            authlogin(request, user)
+            return redirect('books:home')
+        else:
+            return redirect('books:register')
 
 def checkRegister(request):
-	form = RegistrationForm(request.POST, request.FILES)
-	if form.is_valid():
-		profile = Profile()
-		usr = User(request.POST, request.FILES['img'])
-		prof = Profile(request.FILES['img'])
+    form = RegistrationForm(request.POST, request.FILES)
+    if form.is_valid():
+        profile = Profile()
+        usr = User(request.POST, request.FILES['img'])
+        prof = Profile(request.FILES['img'])
         # Check duplicate key
-		username = request.POST.get('username')
-		email = request.POST.get('email')
-		password = request.POST.get('password')
-		newUser=User.objects.create_user(username=username,email=email,password=password)
-		profile.user=newUser
-		profile.profile_picture=form.cleaned_data['img']
-		profile.save()
-		return redirect('books:home')
-	else: 
-		return redirect('books:register')
+        username = request.POST.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        newUser=User.objects.create_user(username=username,email=email,password=password)
+        profile.user=newUser
+        profile.profile_picture=form.cleaned_data['img']
+        profile.save()
+        return redirect('books:home')
+    else: 
+        return redirect('books:register')
 
 def register(request):
-	regForm = RegistrationForm()
-	logForm = LoginForm()
-	category_list = Category.objects.all()
-	book_list = Book.objects.all()
-	return render(request, 'books/index.html',
-		{'rform': RegistrationForm, 'lform': LoginForm,
-		'category_list': category_list, 'book_list': book_list})
+    regForm = RegistrationForm()
+    logForm = LoginForm()
+    category_list = Category.objects.all()
+    book_list = Book.objects.all()
+    return render(request, 'books/index.html',
+        {'rform': RegistrationForm, 'lform': LoginForm,
+        'category_list': category_list, 'book_list': book_list})
 
 # @login_required(login_url='books:register')
 @login_required(login_url='books:register')
 def home (request):
-	# if User.is_authenticated:
-		# user_image = User.Profile_set.filter(username='a7mad').profile_picture
-	category_list = Category.objects.all()
-	book_list = Book.objects.all()
-	return render(request, 'books/home.html',
-		{'category_list': category_list, 'book_list': book_list})
+    # if User.is_authenticated:
+        # user_image = User.Profile_set.filter(username='a7mad').profile_picture
+    category_list = Category.objects.all()
+    book_list = Book.objects.all()
+    return render(request, 'books/home.html',
+        {'category_list': category_list, 'book_list': book_list})
 
 # def logout(request):
 #     authlogout(request)
@@ -100,11 +100,23 @@ def service1(request, id):
 
 
 def search(request):
-	return render(request, 'books/search.html')
+    return render(request, 'books/search.html')
 
 def searchService(request, keyword):
-	book_results = Book.objects.filter(title__iexact=keyword.strip()).values()
-	author_results = Author.objects.filter(first_name__iexact=keyword.strip()).values()
-	category_results = Category.objects.filter(name__iexact=keyword.strip()).values()
+    book_results = Book.objects.filter(title__iexact=keyword.strip()).values()
+    author_results = Author.objects.filter(first_name__iexact=keyword.strip()).values()
+    category_results = Category.objects.filter(name__iexact=keyword.strip()).values()
 
-	return JsonResponse({'results': [list(author_results), list(book_results), list(category_results)]})
+    return JsonResponse({'results': [list(author_results), list(book_results), list(category_results)]})
+
+def service5(request, status):
+    d = eval(status)
+    myProfile = get_object_or_404(Profile, id=request.user.profile.id)
+    myCategory = get_object_or_404(Category, id=int(d['c_id']))
+
+    if ProfileCategory.objects.filter(profile=myProfile, category=myCategory):
+        ProfileCategory.objects.filter(profile=myProfile, category=myCategory).update(fav=(1 if d['fav'] == 'true' else 0))
+    else:
+        ProfileCategory.objects.create(profile=myProfile, category=myCategory, fav=(1 if d['fav'] == 'true' else 0))
+    
+    return JsonResponse(status, safe=False)

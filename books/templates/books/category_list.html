@@ -13,6 +13,7 @@
           <th>Category Number</th>
           <th>Category Picture</th>
           <th>Category Name</th>
+          <th>Favourite</th>
         </tr>
       </thead>
       <tbody>
@@ -21,6 +22,7 @@
           <td>{{ forloop.counter }}</td>
           <td><img style="object-fit: cover;" src="{{ item.image.url }}" alt="" height="100" width="100"></td>
           <td><a href="{% url 'books:category-detail' item.id %}">{{ item.name }}</a></td>
+          <td id="{{ item.id }}"><input type="checkbox" name=""></td>
         </tr>
         {% endfor %}
       </tbody>
@@ -28,5 +30,23 @@
   </div>
 </div>
 <!-- body block-->
-<script src=""></script>
+<script>
+    var favs = document.getElementsByTagName('input');
+    for (var i=0; i<favs.length; i++) {
+      favs[i].addEventListener('change', function(e) {
+        var value = e.target.checked;
+        var url = "{% url 'books:service5' 111 %}".replace('111', `dict(c_id=${e.target.parentElement.id},fav='${value}')`); 
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (this.readyState == 4 && this.status == 200) {
+              var response = this.responseText;
+              response = JSON.parse(response);
+          }
+        };
+        xhttp.open("GET", url, true);
+        xhttp.send();
+    })
+    }
+    
+</script>
 {% endblock %}
