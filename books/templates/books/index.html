@@ -54,19 +54,33 @@
 	<!-- body block-->
 	{% if not user.is_authenticated %}
   <!-- Sign Up block -->
-	<div class="col-md-3 p-2">
-	  <form action="{% url 'books:check-register' %}" class="bg-light p-4" method="POST" enctype="multipart/form-data" >
-			{% csrf_token %}
-			{% for field in rform %}
-			<div class="form-group">
-			  <label>{{field.label}}</label>
-			  {{ field }}
-			</div>
-			{% endfor %}
-	    <button type="submit" class="btn btn-primary">Sign Up</button>
-	  </form>
-	</div>
-	<!-- Sign Up block -->
-	{% endif %}
-</div>
-{% endblock %}
+  <div class="col-md-3 p-2">
+        <form action="{% url 'books:check-register' %}" class="bg-light border p-4" method="POST" enctype="multipart/form-data" >
+           {% csrf_token %}
+       {% for field in rform %}
+            <div class="form-group">
+              <label>{{field.label}}</label>
+              {{ field }}
+              <p style="color: red">
+                {% if field.errors %}
+                {{ field.errors|striptags }}</li>
+                {% elif custom_errors %}
+                    {% if field.name == "username" %}
+                        {{ custom_errors }}    
+                    {% endif %}
+                {% elif pass_err %}
+                    {% if field.name == "password" %}
+                        {{ pass_err }}    
+                    {% endif %}
+                {% endif %}
+              </p>
+            </div>
+              {% endfor %}
+          <button type="submit" class="btn btn-primary">Sign Up</button>
+        </form>
+      </div>
+      <!-- Sign Up block -->
+      {% endif %}
+  </div>
+  {% endblock %}
+  

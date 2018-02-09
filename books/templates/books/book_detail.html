@@ -17,8 +17,8 @@
     width: 1.1em;
   }
 
-  .rating>span:hover:before,
-  .rating>span:hover~span:before {
+  .rating1>span:hover:before,
+  .rating1>span:hover~span:before {
     content: "\2605";
     position: absolute;
   }
@@ -34,6 +34,27 @@
             <img class="m-1" src="{{ book.image.url }}" alt="StickToBox" width="200px" height="250px" style="object-fit: cover;">
           </div>
         </div>
+        <div class="row my-3">
+            <div class="col">
+                    <div>
+                            <select id="select" name="status">
+                                <option id="default"></option>
+                            </select>
+                        </div>
+                        <div id="rate" class="rating rating1">
+                        <input type="radio" id="Star5" name="rating1" value="5" />
+                        <label for="Star5" title="Rocks!">5 Stars</label>
+                        <input type="radio" id="Star4" name="rating1" value="4" />
+                        <label for="Star4" title="Pretty good">4 Stars</label>
+                        <input type="radio" id="Star3" name="rating1" value="3" />
+                        <label for="Star3" title="Meh">3 Stars</label>
+                        <input type="radio" id="Star2" name="rating1" value="2" />
+                        <label for="Star2" title="Kinda bad">2 Stars</label>
+                        <input type="radio" id="Star1" name="rating1" value="1" />
+                        <label for="Star1" title="Sucks big time">1 Star</label>
+                      </div>
+            </div>
+        </div>
         <!-- Image -->
       </div>
       <div class="col m-2">
@@ -45,18 +66,18 @@
             <h5 class="mx-3">Name: <span class="">{{ book.title }}</span></h5>
             <h5 class="mx-3">By: <span class="">{{book.author.all.0.full_name}}</span></h5>
             <h5 class="mx-3 mb-3">Rating: <span class="">
-              <div id="rate" class="rating">
-              <input type="radio" id="star5" name="rating" value="5" />
-              <label for="star5" title="Rocks!">5 stars</label>
-              <input type="radio" id="star4" name="rating" value="4" />
-              <label for="star4" title="Pretty good">4 stars</label>
-              <input type="radio" id="star3" name="rating" value="3" />
-              <label for="star3" title="Meh">3 stars</label>
-              <input type="radio" id="star2" name="rating" value="2" />
-              <label for="star2" title="Kinda bad">2 stars</label>
-              <input type="radio" id="star1" name="rating" value="1" />
-              <label for="star1" title="Sucks big time">1 star</label>
-              </div></span>
+                    <div id="overAllRate" class="rating">
+                            <input type="radio" id="star5" name="rating" value="5" disabled/>
+                            <label for="star5" title="Rocks!">5 stars</label>
+                            <input type="radio" id="star4" name="rating" value="4" disabled/>
+                            <label for="star4" title="Pretty good">4 stars</label>
+                            <input type="radio" id="star3" name="rating" value="3" disabled/>
+                            <label for="star3" title="Meh">3 stars</label>
+                            <input type="radio" id="star2" name="rating" value="2" disabled/>
+                            <label for="star2" title="Kinda bad">2 stars</label>
+                            <input type="radio" id="star1" name="rating" value="1" disabled/>
+                            <label for="star1" title="Sucks big time">1 star</label>
+                          </div></span>
             </h5>
           </div>
           <div class="col bg-light mb-2 mx-2">
@@ -106,7 +127,7 @@
   }
 
   function clearRate() {
-      var inputs = document.getElementsByTagName('input');
+      var inputs = document.getElementsByName('rating1');
       for (var i=0; i<inputs.length; i++) {
           inputs[i].checked = false;
       }
@@ -124,5 +145,74 @@
     xhttp.open("GET", "{% url 'books:service1' book.id %}", true);
     xhttp.send();
 }
+    var stats = []
+	  select=document.getElementById('select')
+      function ajaxSuccess ()
+		{
+		  var response =JSON.parse(this.responseText)
+		  // console.log(response)
+		  for (var i = 0; i < response.length; i++) {
+		  	console.log(response[i][1])
+		  	option = document.createElement('option')
+			option.innerHTML=response[i][1]
+			option.value=response[i][0]
+			option.id=response[i][0]
+			select.appendChild(option)
+		  };
+		}
+		
+		function curStatus()
+		{
+		  var response =JSON.parse(this.responseText)
+		  Default = document.getElementById('default')
+		  option = document.getElementById(response).textContent
+		  Default.innerHTML=''
+		  console.log(response)
+		  Default.innerHTML = option
+		  // select.value=response
+		  
+		}
+
+		document.addEventListener("DOMContentLoaded", function () {
+		    var oReq = new XMLHttpRequest();
+		    oReq.onload = ajaxSuccess;
+		    oReq.open("GET", "{% url 'books:service3' %}", true);		    
+		    oReq.send();
+
+		})
+		
+		document.addEventListener("DOMContentLoaded", function () {    
+		    var req = new XMLHttpRequest();
+		    req.onload = curStatus;
+		    req.open("GET", "{% url 'books:Status' book.id %}");	
+		    req.send();
+		})
+		function ajaxSuccesss(){
+			console.log("hello")
+			res = (this.responseText)
+			// console.log(res)
+		}
+		select.addEventListener('change', function(e) {
+			var Req = new XMLHttpRequest();
+		    Req.onload = ajaxSuccesss;
+		    var selVal = select.value;
+		    console.log(selVal)
+		    Req.open("get", window.location.href+`edit?status=${selVal}`,true);
+		    Req.send();
+		})
+
+		rating=document.getElementById('rate')
+		rate.addEventListener('click', function(e) {
+		console.log(e.target.value)
+		if (e.target.value)
+			{
+				var starReq = new XMLHttpRequest();
+			    starReq.onload = ajaxSuccesss;
+			    var Rate = e.target.value;
+			    console.log(Rate)
+			    starReq.open("get", window.location.href+`rate?rate=${Rate}`,true);
+			    starReq.send();
+		    }
+		})
 </script>
 {% endblock %}
