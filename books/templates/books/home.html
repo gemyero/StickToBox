@@ -5,28 +5,70 @@
 <div class="row">
   <div class="col m-1">
     <div class="row">
-      <!-- Image -->
-      <img class="bg-dark m-1" src="#" alt="StickToBox" width="200px" height="200px">
-      <!-- Image -->
-      <!-- Quote 1 -->
-      <div class="col border m-1 text-xl-center bg-light">
-        <!-- {% for author in Authors %} -->
-<!--         {% for first_name in request.authors_list.first_name %}
-        <p class="">first_name</p>
-        {% endfor %}
- -->
-      {{ authors_list }}
-        <!-- {% endfor %} -->
-      <!-- } -->
+      <div class="mr-3">
+        <!-- Image -->
+        <div class="row">
+          <div class="border">
+            <img class="m-1" src="{{ request.user.profile.profile_picture.url }}" alt="StickToBox" width="200px" height="200px" style="object-fit: cover;">
+          </div>
+        </div>
+        <!-- Image -->
+        <div class="row">
+          <!-- Categories block -->
+          <div class="col-md my-3 bg-light">
+            <h2 class="text-center">Categories</h2>
+            <ul>
+              {% for item in category_list %}
+              <li class=""><a href="{% url 'books:category-detail' item.id %}">{{ item.name }}</a></li>
+              {% endfor %}
+            </ul>
+          </div>
+          <!-- Categories block -->
+        </div>
       </div>
-      <!-- Quote 1 -->
+      <div class="col m-2">
+        <!-- user information -->
+        <div class="row">
+          <div class="col bg-light mb-2 mx-2">
+            <h3 class="m-3">Username: {{ request.user.username }}</h3>
+            <h3 class="m-3">Email: {{ request.user.email }}</h3>
+          </div>
+        </div>
+        <!-- user information -->
+        <div class="row">
+          <div class="col bg-light m-2">
+            <h3 class="text-center">Reading List</h3>
+            <ul>
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col bg-light m-2">
+            <h3 class="text-center">Wish List</h3>
+            <ul>
+            </ul>
+          </div>
+        </div>  
+        <div class="row">
+          <div class="col bg-light m-2">
+            <h3 class="text-center">Finished List</h3>
+            <ul>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
+    <!-- second row -->
     <div class="row">
-      <!-- Categories block -->
-      <div class="col-md-4 border m-1 text-xl-center bg-light"><h1>Categories</h1></div>
-      <!-- Categories block -->
       <!-- Books block -->
-      <div class="col border m-1 text-xl-center bg-light"><h1>Books</h1></div>
+      <div class="col-md m-2 bg-light">
+        <h2 class="text-center">Books</h2>
+        <ul>
+          {% for item in book_list %} <!-- ???????????? -->
+          <li><a href="{% url 'books:book-detail' item.id %}">{{ item.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
       <!-- Books block -->
     </div>
   </div>

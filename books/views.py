@@ -65,19 +65,21 @@ def checkRegister(request):
 def register(request):
 	regForm = RegistrationForm()
 	logForm = LoginForm()
-	return render(request, 'books/index.html', {'rform': RegistrationForm, 'lform': LoginForm})
+	category_list = Category.objects.all()
+	book_list = Book.objects.all()
+	return render(request, 'books/index.html',
+		{'rform': RegistrationForm, 'lform': LoginForm,
+		'category_list': category_list, 'book_list': book_list})
 
 # @login_required(login_url='books:register')
 @login_required(login_url='books:register')
 def home (request):
-	authors_list = Author.objects.all()[0].first_name
-	# all_models_dict = {
-	# 	"template_name": "books/home.html",
-	# 	"queryset": Author.objects.all(),
-	# 	"extra_context" : {
-	# 	}
-	# }
-	return render(request, 'books/home.html', Context({'authors_list': authors_list}))
+	# if User.is_authenticated:
+		# user_image = User.Profile_set.filter(username='a7mad').profile_picture
+	category_list = Category.objects.all()
+	book_list = Book.objects.all()
+	return render(request, 'books/home.html',
+		{'category_list': category_list, 'book_list': book_list})
 
 # def logout(request):
 #     authlogout(request)

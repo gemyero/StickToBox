@@ -1,33 +1,61 @@
 {% extends 'books/base.html' %}
 {% block content %}
 <div class="row">
-  <!-- body block-->
+	<!-- body block-->
   <div class="col m-1">
     <div class="row">
       <!-- Image -->
-      <img class="bg-dark m-1" src="#" alt="StickToBox" width="200px" height="200px">
+      <img class="bg-dark m-1" src="https://static01.nyt.com/images/2016/05/25/books/review/25bestseller-logo/25bestseller-logo-videoLarge.jpg" alt="StickToBox" width="200px" height="200px" style="object-fit: cover;">
       <!-- Image -->
-      <!-- Quote 1 -->
-      <div class="col border m-1 text-xl-center bg-light"><h1>Quote 1</h1></div>
-      <!-- Quote 1 -->
-      <!-- Quote 2 -->
-      <div class="col border m-1 text-xl-center bg-light"><h1>Quote 2</h1></div>
-      <!-- Quote 2 -->
+      <div class="col card border-info m-3">
+        <div class="card-body text-info">
+          <h5 class="card-title">Of Mice And Men</h5>
+          <p class="card-text text-justify">
+            <p>Author: John Steinbeck</p>
+            <p>Year: 1937</p>
+            <p class="text-justify">"Maybe everybody in the whole damn world is scared of each other."</p>
+          </p>
+        </div>
+      </div>
+      <div class="col card border-info m-3">
+        <div class="card-body text-info">
+          <h5 class="card-title">Of Mice And Men</h5>
+          <p class="card-text text-justify">
+            <p>Author: Ralph Ellison</p>
+            <p>Year: 1952</p>
+            <p class="text-justify">"Life is to be lived, not controlled; and humanity is won by continuing to play in face of certain defeat."</p>
+          </p>
+        </div>
+      </div>
     </div>
     <div class="row">
       <!-- Categories block -->
-      <div class="col-md-4 border m-1 text-xl-center bg-light"><h1>Categories</h1></div>
+      <div class="col-md m-2 bg-light">
+        <h2 class="text-center">Categories</h2>
+        <ul>
+          {% for item in category_list %}
+          <li class=""><a href="{% url 'books:category-detail' item.id %}">{{ item.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
       <!-- Categories block -->
       <!-- Books block -->
-      <div class="col border m-1 text-xl-center bg-light"><h1>Books</h1></div>
+      <div class="col-md m-2 bg-light">
+        <h2 class="text-center">Books</h2>
+        <ul>
+          {% for item in book_list %} <!-- ???????????? -->
+          <li><a href="{% url 'books:book-detail' item.id %}">{{ item.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
       <!-- Books block -->
     </div>
   </div>
-  <!-- body block-->
-  <!-- {% if not user.is_authenticated %} -->
+	<!-- body block-->
+	{% if not user.is_authenticated %}
   <!-- Sign Up block -->
 	<div class="col-md-3 p-2">
-	  <form action="{% url 'books:check-register' %}" class="bg-light border p-4" method="POST" enctype="multipart/form-data" >
+	  <form action="{% url 'books:check-register' %}" class="bg-light p-4" method="POST" enctype="multipart/form-data" >
 			{% csrf_token %}
 			{% for field in rform %}
 			<div class="form-group">
@@ -39,6 +67,6 @@
 	  </form>
 	</div>
 	<!-- Sign Up block -->
-	<!-- {% endif %} -->
+	{% endif %}
 </div>
 {% endblock %}
