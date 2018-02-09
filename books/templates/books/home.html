@@ -21,8 +21,10 @@
             <h3 class="text-center m-1">Categories</h3>
             <ul>
               {% for item in category_list %}
-              <li class=""><a href="{% url 'books:category-detail' item.id %}">{{ item.name }}</a></li>
-              {% endfor %}
+              {% if item.profilecategory_set.all.0.fav %}
+                <li class=""><a href="{% url 'books:category-detail' item.id %}">{{ item.name }}</a></li>
+              {% endif %}
+                {% endfor %}
             </ul>
           </div>
           <!-- Categories block -->
@@ -41,6 +43,11 @@
           <div class="col bg-light m-2">
             <h3 class="text-center">Reading List</h3>
             <ul>
+                {% for profilebook in request.user.profile.profilebook_set.all %}
+                {% if profilebook.status == 'reading' %}
+                <li>{{ profilebook.book }}</li>
+                {% endif %}
+                {% endfor %}
             </ul>
           </div>
         </div>
@@ -48,14 +55,24 @@
           <div class="col bg-light m-2">
             <h3 class="text-center">Wish List</h3>
             <ul>
-            </ul>
+                    {% for profilebook in request.user.profile.profilebook_set.all %}
+                    {% if profilebook.status == 'wishlist' %}
+                    <li>{{ profilebook.book }}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
           </div>
         </div>  
         <div class="row">
           <div class="col bg-light m-2">
             <h3 class="text-center">Finished List</h3>
             <ul>
-            </ul>
+                    {% for profilebook in request.user.profile.profilebook_set.all %}
+                    {% if profilebook.status == 'read' %}
+                    <li>{{ profilebook.book }}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
           </div>
         </div>
       </div>
