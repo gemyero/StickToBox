@@ -32,16 +32,16 @@ class CategoryView(DetailView):
     model = Category
 
 
-def checkLogin (request):
+def checkLogin(request):
 	if request.method == 'POST':
 		uname = request.POST.get('username')
 		passwd = request.POST.get('password')
 		user = authenticate(username=uname,password=passwd)
 		if user is not None:
-			authlogin(request,user)
-			return render(request,"books/index.html")
-	else:
-		return redirect('books:register')
+			authlogin(request, user)
+			return render(request,"books/home.html")
+		else:
+			return redirect('books:home')
 
 def checkRegister(request):
 	form = RegistrationForm(request.POST, request.FILES)
@@ -64,15 +64,16 @@ def checkRegister(request):
 def register (request):
 	regForm = RegistrationForm()
 	logForm = LoginForm()
-	return render(request,'books/index.html',{'rform':regForm, 'lform':logForm})
+	return render(request,'books/index.html', {'rform':regForm, 'lform':logForm})
 
-@login_required(login_url='books:register')
+# @login_required(login_url='books:register')
+# @login_required(login_url='')
 def home (request):
-	return render(request,"books/home.html")
+	return render(request, 'books/index.html', {'rform': RegistrationForm, 'lform': LoginForm})
 
-def logout(request):
-    authlogout(request)
-    return redirect('books:register')
+# def logout(request):
+#     authlogout(request)
+#     return redirect('books:register')
 
 
 def service1(request, id):

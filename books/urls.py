@@ -1,13 +1,18 @@
 from django.urls import path,re_path
 from . import views
+from django.conf.urls import url
+from django.conf import settings
+from django.contrib.auth.views import logout
 
-app_name='books'
+app_name = 'books'
+
 urlpatterns=[
 	# re_path(r'^login/', views.login),
 	# re_path(r'^register/', views.register, name='register'),
-	re_path(r'^$',views.home, name='home'),
-	re_path(r'^login$',views.checkLogin, name='check-login'),
-	re_path(r'^reg$',views.checkRegister, name='check-register'),
+	re_path(r'^$', views.home, name='home'),
+	re_path(r'^login$', views.checkLogin, name='check-login'),
+    re_path(r'^logout/$', logout, {'next_page': settings.LOGOUT_REDIRECT_URL}, name='logout'),
+	re_path(r'^reg$', views.checkRegister, name='check-register'),
 	path('author/<int:pk>', views.AuthorView.as_view(), name='author-detail'),
 	path('authors/', views.AuthorList.as_view(), name='author-list'),
 	path('book/<int:pk>', views.BookView.as_view(), name='book-detail'),
