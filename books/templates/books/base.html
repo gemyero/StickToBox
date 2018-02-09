@@ -25,11 +25,12 @@
         <a class="nav-item nav-link" href="{% url 'books:author-list' %}">Authors<span class="sr-only">(current)</span></a>
         <a class="nav-item nav-link" href="{% url 'books:category-list' %}">Categories</a>
         <a class="nav-item nav-link" href="{% url 'books:book-list' %}">Books</a>
+        <a class="nav-item nav-link" href="{% url 'books:search' %}">Search</a>
       </div>
       {% if user.is_authenticated %}
       <!-- if logged in -->
       <div class="nav-item nav-link">
-        <a href="#"> <!-- edit profile page -->
+        <a href="{% url 'books:home' %}"> <!-- edit profile page -->
           <img class="avatar img-responsive mr-1" style="height: 30px; width: 30px; object-fit: cover;" src="{{ request.user.profile.profile_picture.url }}">
           <span class="header-username">{{ request.user.username }}</span>
         </a>
