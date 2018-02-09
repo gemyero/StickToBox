@@ -2,11 +2,33 @@
 
 {% block content %}
 <!-- body block-->
-<input class="form-control" type="text" name="" id="search" placeholder="search">
-
-<div id="Authors" style="display: none;">Authors</div>
-<div id="Books" style="display: none;">Books</div>
-<div id="Categories" style="display: none;">Categories</div>
+<h1>Search</h1>
+<div class="row" m-3>
+  <div class="col">
+    <input class="form-control" type="text" name="" id="search" placeholder="search">
+  </div>
+</div>
+<div class="row m-3">
+  <div class="col">
+    <div id="Authors" style="display: none;">
+      <h4>Authors</h4>
+    </div>
+  </div>
+</div>
+<div class="row m-3">
+  <div class="col">
+    <div id="Books" style="display: none;">
+      <h4>Books</h4>
+    </div>
+  </div>
+</div>
+<div class="row m-3">
+  <div class="col">
+    <div id="Categories" style="display: none;">
+      <h4>Categories</h4>
+    </div>
+  </div>
+</div>
 
 <script type="text/javascript">
     search.addEventListener('change', function(e) {
