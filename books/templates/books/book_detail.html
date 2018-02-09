@@ -73,22 +73,20 @@
                 {% for commentObject in book.profilebook_set.all %}
                 <div class="row">
                   <div class="col-md-3">
-                    <!-- <img class="m-3" style="object-fit: cover;" src="{% static commentObject.profile.profile_picture %}" width="80px" height="80px" alt=""> -->
-                    <!-- {{ commentObject.profile.profile_picture }} -->
-
+                    <img class="m-3" style="object-fit: cover;" src="{% static "img/book.png" %}" width="80px" height="80px" alt="">
                   </div>
                   <div class="col m-3">
                     <p>{{ commentObject.comment }}</p>
                   </div>
                 </div>
                 {% endfor %}
-                {% if user.is_authenticated %}
+<!--                 {% if user.is_authenticated %}
                 <div class="row m-3">
                   <div class="col">
-                    <input type="text" class="form-control" placeholder="comment here">
+                    <input type="text" class="form-control" placeholder="comment">
                   </div>
                 </div>
-                {% endif %}
+                {% endif %} -->
               </div>
             </div>
           </div>
