@@ -1,0 +1,61 @@
+<!doctype html {% load static %}>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ title }}</title>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="{% static "css/bootstrap.min.css" %}"> <!-- bootstrap default styling file-->
+  <!-- <link rel="stylesheet" href="{% static "css/myorders.css" %}"> -->
+</head>
+<body>
+  <!-- Navigation Bar-->
+  <nav class="navbar navbar-expand-sm navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'books:home' %}">StickToBox</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+      <div class="navbar-nav">
+        <a class="nav-item nav-link" href="{% url 'books:author-list' %}">Authors<span class="sr-only">(current)</span></a>
+        <a class="nav-item nav-link" href="{% url 'books:category-list' %}">Categories</a>
+        <a class="nav-item nav-link" href="{% url 'books:book-list' %}">Books</a>
+      </div>
+      {% if user.is_authenticated %}
+      <!-- if logged in -->
+      <div class="nav-item nav-link">
+        <a href="#"> <!-- edit profile page -->
+          <img class="avatar img-responsive mr-1" style="height: 30px; width: 30px" src="
+          {{ user_avatar }}">
+          <span class="header-username">{{ user_first_name }} {{ user_last_name }}</span>
+        </a>
+        <!-- <img class="d-inline-block " src="#" alt=""> -->
+        | 
+        <a href="{% url 'books:logout' %}">log out</a>
+      </div>
+      <!-- if logged in -->
+      {% else %}
+      <!-- if not logged in -->
+      <form class="form-inline" action="{% url 'books:check-login' %}" method="POST" > <!-- make it not flex ??-->
+        {% csrf_token %}
+        {% for field in lform %}
+        <div class="form-group m-1">
+          {{ field }}
+        </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary">Sign In</button>
+      </form>
+      <!-- if not logged in -->
+      {% endif %}
+    </div>
+  </nav>
+  <!-- Navigation Bar-->
+  <div class="container p-5">
+  <!-- body content block-->
+  {% block content %}
+  {% endblock %}
+  <!-- body content block-->
+  </div>
+</body>
+  <!-- <script src="{% static "js/login.js" %}"></script> -->
+</html>

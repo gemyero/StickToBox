@@ -1,14 +1,15 @@
 {% extends 'books/base.html' %}
+
 {% block content %}
+<!-- body block-->
 <div class="row">
-  <!-- body block-->
   <div class="col m-1">
     <div class="row">
       <!-- Image -->
       <img class="bg-dark m-1" src="#" alt="StickToBox" width="200px" height="200px">
       <!-- Image -->
       <!-- Quote 1 -->
-      <div class="col border m-1 text-xl-center bg-light"><h1>{{ user }}</h1></div>
+      <div class="col border m-1 text-xl-center bg-light"><h1>Quote 1</h1></div>
       <!-- Quote 1 -->
       <!-- Quote 2 -->
       <div class="col border m-1 text-xl-center bg-light"><h1>Quote 2</h1></div>
@@ -23,22 +24,6 @@
       <!-- Books block -->
     </div>
   </div>
-  <!-- body block-->
-  <!-- {% if not user.is_authenticated %} -->
-  <!-- Sign Up block -->
-	<div class="col-md-3 p-2">
-	  <form action="{% url 'books:check-register' %}" class="bg-light border p-4" method="POST" enctype="multipart/form-data" >
-			{% csrf_token %}
-			{% for field in rform %}
-			<div class="form-group">
-			  <label>{{field.label}}</label>
-			  {{ field }}
-			</div>
-			{% endfor %}
-	    <button type="submit" class="btn btn-primary">Sign Up</button>
-	  </form>
-	</div>
-	<!-- Sign Up block -->
-	<!-- {% endif %} -->
 </div>
+<!-- body block-->
 {% endblock %}
