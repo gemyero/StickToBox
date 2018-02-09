@@ -65,20 +65,21 @@
             <h3 class="m-3">Book Information</h3>
             <h5 class="mx-3">Name: <span class="">{{ book.title }}</span></h5>
             <h5 class="mx-3">By: <span class="">{{book.author.all.0.full_name}}</span></h5>
-            <h5 class="mx-3 mb-3">Rating: <span class="">
-                    <div id="overAllRate" class="rating">
-                            <input type="radio" id="star5" name="rating" value="5" disabled/>
-                            <label for="star5" title="Rocks!">5 stars</label>
-                            <input type="radio" id="star4" name="rating" value="4" disabled/>
-                            <label for="star4" title="Pretty good">4 stars</label>
-                            <input type="radio" id="star3" name="rating" value="3" disabled/>
-                            <label for="star3" title="Meh">3 stars</label>
-                            <input type="radio" id="star2" name="rating" value="2" disabled/>
-                            <label for="star2" title="Kinda bad">2 stars</label>
-                            <input type="radio" id="star1" name="rating" value="1" disabled/>
-                            <label for="star1" title="Sucks big time">1 star</label>
-                          </div></span>
-            </h5>
+            <h5 class="mx-3 mb-3">Rating: </h5>
+            <div class="mx-3">
+              <div id="overAllRate" class="rating">
+                <input type="radio" id="star5" name="rating" value="5" disabled/>
+                <label for="star5" title="Rocks!">5 stars</label>
+                <input type="radio" id="star4" name="rating" value="4" disabled/>
+                <label for="star4" title="Pretty good">4 stars</label>
+                <input type="radio" id="star3" name="rating" value="3" disabled/>
+                <label for="star3" title="Meh">3 stars</label>
+                <input type="radio" id="star2" name="rating" value="2" disabled/>
+                <label for="star2" title="Kinda bad">2 stars</label>
+                <input type="radio" id="star1" name="rating" value="1" disabled/>
+                <label for="star1" title="Sucks big time">1 star</label>
+              </div>
+            </div>
           </div>
           <div class="col bg-light mb-2 mx-2">
             <h3 class="m-3">Description</h3>
@@ -94,22 +95,20 @@
                 {% for commentObject in book.profilebook_set.all %}
                 <div class="row">
                   <div class="col-md-3">
-                    <!-- <img class="m-3" style="object-fit: cover;" src="{% static commentObject.profile.profile_picture %}" width="80px" height="80px" alt=""> -->
-                    <!-- {{ commentObject.profile.profile_picture }} -->
-
+                    <img class="m-3" style="object-fit: cover;" src="{% static "img/book.png" %}" width="80px" height="80px" alt="">
                   </div>
                   <div class="col m-3">
                     <p>{{ commentObject.comment }}</p>
                   </div>
                 </div>
                 {% endfor %}
-                {% if user.is_authenticated %}
+<!--                 {% if user.is_authenticated %}
                 <div class="row m-3">
                   <div class="col">
-                    <input type="text" class="form-control" placeholder="comment here">
+                    <input type="text" class="form-control" placeholder="comment">
                   </div>
                 </div>
-                {% endif %}
+                {% endif %} -->
               </div>
             </div>
           </div>
