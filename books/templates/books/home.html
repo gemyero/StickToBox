@@ -1,5 +1,7 @@
 {% extends 'books/base.html' %}
 
+{% block title %}{{ request.user.profile }}{% endblock %}
+
 {% block content %}
 <!-- body block-->
 <div class="row">
@@ -30,7 +32,7 @@
         <!-- user information -->
         <div class="row">
           <div class="col bg-light mb-2 mx-2">
-            <h3 class="m-3">Username: <span class="text-primary">{{ request.user.username }}</span></h3>
+            <h3 class="m-3">Name: <span class="text-primary">{{ request.user.profile }}</span></h3>
             <h3 class="m-3">Email: <span class="text-primary">{{ request.user.email }}</span></h3>
           </div>
         </div>

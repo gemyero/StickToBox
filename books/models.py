@@ -31,6 +31,7 @@ class Author(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=70)
     image = models.ImageField(upload_to='images/categories/') # will add upload to attribute later!
+    profile = models.ManyToManyField(Profile, through='ProfileCategory')
 
     def __str__(self):
         return self.name
@@ -61,3 +62,7 @@ class ProfileBook(models.Model):
     rate =  models.IntegerField(default=0, validators=[MaxValueValidator(5), MinValueValidator(0)])
     comment = models.TextField()
 
+class ProfileCategory(models.Model):
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    fav = models.NullBooleanField()
