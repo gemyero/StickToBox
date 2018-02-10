@@ -1,3 +1,4 @@
+# Stick To Box
 ### Description:
 > Stick To Box is a website written in Python3 Django aimed to host reviews about books based on users opinions and ratings.
 
