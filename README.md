@@ -3,15 +3,15 @@
 > Stick To Box is a website written in Python3 Django aimed to host reviews about books based on users opinions and ratings.
 
 ### The website features:
-> Listing books based on categories.
+> - Listing books based on categories.
 >
-> Listing authors.
+> - Listing authors.
 >
-> Actions on books like adding to user's wishlist, reading or already read books.
+> - Actions on books like adding to user's wishlist, reading or already read books.
 >
-> Searching in names of authors and book titles.
+> - Searching in names of authors and book titles.
 >
-> Enabling users to contribute to ratings and reviews on every book.
+> - Enabling users to contribute to ratings and reviews on every book.
 >
 ### Installation Guide:
 > 1- Make sure to have Python3 and Django installed on the server intended to host your deployment.
